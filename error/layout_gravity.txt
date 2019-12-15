@@ -1,0 +1,213 @@
+일반적인 프로그래밍 언어에서 화면에 컨트롤을 배치할 때 제공하는 정렬 기능을 안드로이드에서도 그대로 사용할 수 있습니다. 이 때 사용하는 용어가 안드로이드에서는 조금 다른 것을 볼 수 있는데 일반적인 정렬(align)은 순서대로 놓여 지다는 의미로 이해할 수 있으며, 안드로이드에서 사용하는 배치(gravity)는 어느 쪽에 무게 중심을 놓은 것인가의 의미로 이해할 수 있습니다. 하지만 똑같이 생각해도 상관없습니다. 레이아웃에서 정렬 기능이 필요한 경우는 다음과 같이 두 가지로 나눌 수 있습니다.
+
+
+
+
+
+정렬 속성 
+
+설명 
+
+ layout_gravity
+
+부모 컨테이너의 여유 공간에 뷰가 모두 채워지지 않아 여유 공간 안에서 뷰를 정렬할 때 
+
+ gravity
+
+뷰에서 화면에 표시하는 내용물을 정렬할 때(텍스트뷰의 경우, 내용물은 글자가 되고 이미지뷰의 경우 내용물은 이미지가 됨) 
+
+
+
+먼저 부모 컨테이너의 여유 공간에 뷰가 모두 채워지지 않을 경우에 사용하는 layout_gravity는 뷰의 layout_width 나 layout_height 속성을 wrap_content로 할 경우에 같이 사용할 수 있습니다. 예를 들어, 세로 방향으로 설정된 리니어 레이아웃에 추가된 버튼들의 layout_width 속성을 wrap_content로 하게 되면 각각의 버튼들은 한 줄에 한 개씩 추가되면서 글자가 보이는 만큼의 크기로만 보이므로 나머지 가로 공간은 여유 공간으로 남게 됩니다. 안드로이드는 이렇게 여유 공간이 있을 경우 디폴트로 왼쪽 정렬을 하게되는데 layout_gravity 속성을 직접 설정하게 되면 중앙 또는 오른쪽 정렬을 할 수 있습니다.
+
+
+
+예제를 보도록 하겠습니다.
+
+
+
+
+
+gravity.xml 
+
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:orientation="vertical"
+
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+
+    tools:context=".MainActivity" >
+
+
+
+    <Button
+
+        android:id="@+id/button01"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="left"
+
+        android:text="버튼1" />
+
+    
+
+    <Button
+
+        android:id="@+id/button02"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+
+        android:text="버튼2" />
+
+    
+
+    <Button
+
+        android:id="@+id/button03"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="right"
+
+        android:text="버튼3" />
+
+
+
+</LinearLayout>
+
+
+
+
+실행을 해보면 결과는 다음과 같습니다.
+
+뷰에 보이는 내용물을 정렬하는 경우에는 gravity 속성을 사용합니다. gravity 속성은 뷰가 화면에서 차지하는 영역이 충분히 큰 경우에 생기는 여유 공간 안에서 어떻게 정렬할 것인지를 결정합니다. gravity가 적용될 수 있는 대표적인 내용물로는 텍스트뷰 안에 표시되는 텍스트나 이미지뷰에 표시되는 이미지를 들 수 있습니다. gravity 속성에 넣을 수 있는 값들은 layout_gravity와 같으며, 필요한 경우에는 '|' 연산자를 이용해 여러 개의 값을 같이 설정할 수도 있습니다. 이 때 주의할 점은 '|' 연산자 양쪽에 공백이 없어야 한다는 점입니다.
+
+
+
+다음은 하나의 텍스트뷰를 화면 전체에 채운 후 그 안에 표시되는 텍스트를 왼쪽 상단, 중앙, 그리고 오른쪽 하단에 표시할 경우에 사용되는 XML 레이아웃으로 각각 'left|top', 'center', 'right|bottom' 값이 설정되었습니다. 예제를 보도록 하겠습니다.
+
+
+
+
+
+<TextView
+
+        android:id="@+id/button01"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+
+        android:gravity="left|top"
+
+        android:text="left|top" /> 
+ <TextView
+
+        android:id="@+id/button02"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+
+        android:gravity="center_horizontal|center_vertical"
+
+        android:text="center" />
+
+
+
+<TextView
+
+        android:id="@+id/button03"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+
+        android:gravity="right|bottom"
+
+        android:text="right|bottom" /> 
+
+gravity 속성으로 지정할 수 있는 값으로는 위와 같이 대표적인 경우 이외에도 여러 가지가 있으며 각각의 값에 대한 설명은 다음과 같습니다.
+
+
+
+정렬 속성값 
+
+설 명 
+
+ top
+
+ 대상 객체를 위쪽 끝에 배치하기 
+
+ bottom
+
+대상 객체를 아래쪽 끝에 배치하기하기 
+
+ left
+
+대상 객체를 왼쪽 끝에 배치하기 
+
+ right
+
+대상 객체를 오른쪽 끝에 배치하기 
+
+ center_vertical
+
+대상 객체를 수직 방향의 중앙에 배치하기 
+
+ center_horizontal
+
+대상 객체를 수평 방향의 중앙에 배치하기 
+
+ fill_vertical
+
+대상 객체를 수직 방향으로 여유 공간만큼 확대하여 채우기 
+
+ fill_horizontal
+
+대상 객체를 수평 방향으로 여유 공간만큼 확대하여 채우기 
+
+ center
+
+대상 객체를 수직 방향과 수평 방향의 중앙아 배치하기 
+
+ fill
+
+대상 객체를 수직 방향과 수평 방향으로 여유 공간만큼 확대하여 채우기 
+
+ clip_vertical
+
+-대상 객체의 상하 길이가 여유 공간보다 클 경우에 남는 부분을 잘라내기
+
+-top|clip_vertical 로 설정한 경우 아래쪽에 남는 부분 잘라내기
+
+-bottom|clip_vertical 로 설정한 경우 위쪽에 남는 부분 잘라내기
+
+-center_vertical|clip_vertical로 설정한 경우 위쪽과 아래쪽에 남는 부분 잘라내기 
+
+ clip_horizontal
+
+-대상 객체의 좌우 길이가 여유 공간보다 클 경우에 남는 부분을 잘라내기
+
+-right|clip_horizontal 로 설정한 경우 왼쪽에 남는 부분 잘라내기
+
+-left|clip_horizontal 로 설정한 경우 오른쪽에 남는 부분 잘라내기
+
+-center_horizontal|clip_horizontal로 설정한 경우 왼쪽과 오른쪽에 남는 부분 잘라내기 
+
+
+
+출처: https://kcizzang.tistory.com/entry/안드로이드-gravity-layoutgravity-설명 [정윤문경아빠의 이야기]

@@ -1,0 +1,131 @@
+https://itpangpang.xyz/335
+
+Status Bar Background, Text Color
+
+변경
+
+
+
+
+
+
+
+ㆍ 아주 간단하게 style에 추가만 시켜주면 된다.
+
+
+
+ㆍ Background는 API 21, TextColor는 API 23부터 가능하다.
+
+
+
+ㆍ TextColor는 기존색깔인 흰색과, 그리고 검정색으로
+
+    바꿀 수 있다.
+
+
+
+ㆍ 기존 StatusBar의 글자색깔은 흰색인데, 만약 Status Bar를 흰색으로
+
+    바꾼다면 글자색깔이 안보이기 때문에 API 23에서 검정색?으로 바꿀 수 있도록
+
+    추가시켜 준 것 같다.
+
+
+
+
+
+
+
+Style에 추가시킨다.
+
+
+
+이 두가지 전부
+
+API Level 조건이 있으므로
+
+valuse-v21/style.xml
+
+
+
+이런식으로
+
+나눠서 API 21미만일때랑
+
+이상일때랑 나눌 수 있다.
+
+
+
+어쨋든 
+
+먼저 StatusBar의
+
+배경색을 바꾸기 위해서는
+
+아래와 같이 android:statusBarColor를
+
+추가시켜주면 된다.
+
+보면 알겠지만
+
+기존글자가
+
+흰색이기 때문에
+
+배경인 흰색과 겹쳐서
+
+글씨가 안보이는 것을
+
+알 수 있다.
+
+
+
+아마 이걸(??)
+
+해결하기 위해
+
+나온건지는 모르겠으나
+
+API 23 부터 StatusBar의
+
+글자색깔을 검정색?으로 바꿀 수 있다.
+
+
+
+아래와 같이 해주면 된다.
+
+
+<!-- Base application theme. -->
+<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+
+    <!--Status Bar 배경색-->
+    <item name="android:statusBarColor">@color/colorWhite</item>
+    <!--Status Bar 글자색깔-->
+    <item name="android:windowLightStatusBar">true</item>
+</style>
+
+android:windowLightStatusBar
+
+이걸 추가시켜준 후에
+
+true라고 써주면 된다.
+그러면 검은색으로 바뀐다.
+
+배경을 어두운색으로 하면 false값으로 바꿔라.
+그러면 흰색으로 바뀐다.
+
+위와 같이 써주면
+
+아래와 같은 결과를
+
+얻을 수 있다.
+
+
+아래처럼하면 타이틀바의 타이틀 텍스트 색을 바꿀 수 있따.
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="android:titleTextColor">#000000</item>
+

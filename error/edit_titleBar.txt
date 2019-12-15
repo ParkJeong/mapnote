@@ -1,0 +1,70 @@
+19_12_15
+<타이틀바 수정하기>
+-----------------------
+상태바는 핸드폰 화면 최 상단에 위치하며, 말그대로 상태를 나타내는 Bar 입니다. 안드로이 폰 자체내의 App들의 상태를 나타내는 Bar이며, 이것은 자신이 만든 App과는 별개 입니다. 시간, 배터리잔량, push 알림, 등등 안드로이드 자체 설정에서 편집이 가능합니다. 다만 App 개발 시 색상정도는 바꿀 수 있습니다.
+
+타이틀 바는 자신이 만든 App의 제목을 나타내는 Bar이며, App개발 시 타이틀 바에 메뉴 버튼을 넣어 관리 할 수 도 있으며, 색상도 자유자재로 바꿀 수 있습니다. 대부분의 개발자들은 Title 바를 없애고 자신이 Custom하여 만든 Title 바를 넣는 것을 더 선호 하기 때문에 기본으로 제공되는 Title바는 없애고 개발을 하는 편이 더 좋습니다. 좀더 여러가지기능을 추가하여 사용가능 하기 때문입니다. 앱바 툴바라고 한다?
+
+AndroidManifest.xml
+   <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".page.calendar.Page4Calendar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+ 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+프로젝트를 만들면 거의 대부분 저상태일겁니다. application 속성에 android:theme 를 보시면 @style/AppTheme로 되어 있는 것이 보이시죠? 이것은 프로젝트 내에 style.xml 파일이 있는데 그파일안에 AppTheme 속성을 이 App의 테마로 설정 하겠다라는 의미입니다. 여기서 <android:theme="@android:style/Theme.NoTitleBar">을 대신 쓰면 안드로이드에서 기본으로 제공하는 NoTitleBar 테마를 쓰게되어 타이틀 바가 없어집니다. 그러나 추후에 style을 Customizing 하기 위해서라도, 자신이 직접 속성을 추가하는 방식으로 Style을 꾸미는게 좋습니다. 
+
+타이틀 바 없애기
+
+styles.xml
+<resources>
+ 
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorDarkBlue</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- No Title Bar-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+ 
+    </style>
+ 
+</resources>
+기본 주석으로도 나와 있듯이 AppTheme 는 parent="Theme.AppCompat.Light.DarkActionBar"을 상속받은 Custom 속성입니다. 기본적으로는 DarkActionBar가 가지고있는 모든 속성을 가지고있고 밑에 자식 속성에 원하는 속성을 추가하여 사용하는 겁니다. 여기에 와 <item name="windowActionBar">false</item>을 <item name="windowNoTitle">true</item>추가하면 TitleBar가 없어집니다. 
+
+상태 바 없애기
+
+MainActivity.java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.calendar_layout);
+        createGUI();
+    }
+cs
+상태 바를 없앨때는 <item name="windowFullscreen">true</item>을 styles.xml에 추가하여도 되지만, 안되는 버전이 많은 관계로 저는 자바 Activity onCreate 메서드 안에서 setContentView()앞에 
+
+1.
+getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.calendar_layout);
+을 추가합니다.
+
+<activity android:name=".MyActivity"android:theme="@android:style/Theme.NoTitleBar.Fullscreen"> 
+그 밖에도 한번에 FullScreen을 만들려면 매니페스트 theme속성에 @android:style/Theme.NoTitleBar.Fullscreen을 쓰면 되지만, 귀찮더라도 제가 한 방식으로 하시는게 오류도 적어지고 나중에 Style.xml을 편집하기에도 용이할거라 생각합니다. 감사합니다.
+
+
+
+출처: https://commin.tistory.com/63 [Commin의 일상코딩]
